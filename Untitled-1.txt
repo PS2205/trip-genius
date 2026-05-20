@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Assistant Website</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f4; }
+        #chatbox { width: 400px; margin: 0 auto; background: #fff; padding: 20px; border-radius: 8px; }
+        #messages { height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; background: #fafafa; }
+        .user { color: #0074D9; }
+        .ai { color: #2ECC40; }
+        #input { width: 80%; padding: 8px; }
+        #send { padding: 8px 16px; }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <h2>AI Assistant</h2>
+        <div id="messages"></div>
+        <input type="text" id="input" placeholder="Ask me anything..." />
+        <button id="send">Send</button>
+    </div>
+    <script>
+        const messages = document.getElementById('messages');
+        const input = document.getElementById('input');
+        const send = document.getElementById('send');
+
+        function appendMessage(sender, text) {
+            const div = document.createElement('div');
+            div.className = sender;
+            div.textContent = sender === 'user' ? 'You: ' + text : 'AI: ' + text;
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        async function getAIResponse(prompt) {
+            // Dummy AI response for demo purposes
+            // Replace this with actual API call to an AI service (like OpenAI, Azure, etc.)
+            return "I'm an AI assistant. You said: " + prompt;
+        }
+
+        send.onclick = async () => {
+            const userInput = input.value.trim();
+            if (!userInput) return;
+            appendMessage('user', userInput);
+            input.value = '';
+            const aiResponse = await getAIResponse(userInput);
+            appendMessage('ai', aiResponse);
+        };
+
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') send.onclick();
+        });
+    </script>
+</body>
+</html>
